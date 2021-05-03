@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Test app</string>
+    <string name="register_fragment_welcome">Welcome</string>
+    <string name="register_fragment_first_name">First Name</string>
+    <string name="register_fragment_last_name">Last Name</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="register_fragment_password_confirmation">Password Confirmation</string>
+    <string name="register_fragment_button_text">SUBMIT</string>
+
+    <string name="login_fragment_hello">Hello</string>
+    <string name="login_fragment_button_text">CONNECT</string>
 </resources>
