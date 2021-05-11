@@ -1,61 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".login.LoginFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+        <variable
+            name="viewModel"
+            type="com.onix.internship.survay.login.LoginViewModel" />
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".login.LoginFragment">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/hello"
-            style="@style/MainTitleText"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/login_fragment_hello"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout"
-            style="@style/MainEditLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/hello">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editLogin"
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/hello"
+                style="@style/MainTitleText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/login" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:text="@string/login_fragment_hello"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout2"
-            style="@style/MainEditLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editPassword"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/logEditLoginLayout"
+                style="@style/MainEditLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/password" />
-        </com.google.android.material.textfield.TextInputLayout>
+                app:errorEnabled="true"
+                app:errorMessage="@{viewModel.errorLogin}"
+                app:boxBackgroundColor="@color/white"
+                app:layout_constraintTop_toBottomOf="@+id/hello"
+                tools:layout_editor_absoluteX="40dp">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/connect"
-            style="@style/MainButton"
-            android:layout_height="wrap_content"
-            android:text="@string/login_fragment_button_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editLogin"
+                    style="@style/MainEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@={viewModel.userLogin}"
+                    android:hint="@string/login" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</FrameLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/logEditPasswordLayout"
+                style="@style/MainEditLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:errorEnabled="true"
+                app:errorMessage="@{viewModel.errorPassword}"
+                app:boxBackgroundColor="@color/white"
+                app:layout_constraintTop_toBottomOf="@+id/logEditLoginLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@={viewModel.userPassword}"
+                    style="@style/MainEditText"
+                    android:hint="@string/password" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/connect"
+                style="@style/MainButton"
+                android:layout_height="wrap_content"
+                android:text="@string/login_fragment_button_text"
+                android:onClick="@{() -> viewModel.connect()}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/logEditPasswordLayout" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+</layout>
