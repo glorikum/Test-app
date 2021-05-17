@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.onix.internship.survay.database.TestAppDatabase
@@ -15,7 +14,7 @@ import com.onix.internship.survay.databinding.RegisterFragmentBinding
 class RegisterFragment : Fragment() {
     private lateinit var binding: RegisterFragmentBinding
     private  val viewModel: RegisterViewModel by viewModels{RegisterViewModelFactory(
-        TestAppDatabase.getInstance(requireNotNull(this.activity).application).usersDao
+        TestAppDatabase.getInstance(requireContext())
     )}
 
     override fun onCreateView(

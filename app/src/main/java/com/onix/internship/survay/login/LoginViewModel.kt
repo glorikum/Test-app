@@ -1,89 +1,49 @@
 package com.onix.internship.survay.login
 
-import android.util.Log
-import androidx.databinding.Bindable
-import androidx.databinding.Observable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
-import com.onix.internship.survay.database.UsersDao
+import com.onix.internship.survay.database.TestAppDatabase
+import com.onix.internship.survay.database.security.md5
+import com.onix.internship.survay.errors.ErrorStates
 import com.onix.internship.survay.events.SingleLiveEvent
 import com.onix.internship.survay.start.StartFragmentDirections
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import java.math.BigInteger
-import java.security.MessageDigest
 
-class LoginViewModel(val database: UsersDao) : ViewModel(), Observable {
+class LoginViewModel(val database: TestAppDatabase) : ViewModel() {
+
+    val model = LoginModel()
+
     private val _navigationLiveEvent = SingleLiveEvent<NavDirections>()
     val navigationLiveEvent: LiveData<NavDirections> = _navigationLiveEvent
 
-    @Bindable
-    val userLogin = MutableLiveData<String>()
+    private var _errorLogin = MutableLiveData(ErrorStates.NONE)
+    var errorLogin: LiveData<ErrorStates> = _errorLogin
 
-    @Bindable
-    val userPassword = MutableLiveData<String>()
+    private var _errorPassword = MutableLiveData(ErrorStates.NONE)
+    var errorPassword: LiveData<ErrorStates> = _errorPassword
 
-    private val _errorLogin = MutableLiveData<Boolean>()
-    val errorLogin: LiveData<Boolean> = _errorLogin
-
-    private val _errorPassword = MutableLiveData<Boolean>()
-    val errorPassword: LiveData<Boolean> = _errorPassword
-
-    private val viewModelJob = Job()
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-
-    init {
-        userLogin.value = ""
-        userPassword.value = ""
-    }
-
-    fun connect(){
-        if (!isError()){
-            uiScope.launch {
-                val usersNames = database.getUserLogin(userLogin.value!!)
-                if (usersNames != null) {
-                    Log.i("MYTAG", usersNames.login)
-                } else{
-                    Log.i("MYTAG", "NULL")
-                }
-                if (usersNames != null) {
-                    if(usersNames.password == md5(userPassword.value!!)){
-                        userLogin.value = ""
-                        userPassword.value = ""
-                        _navigationLiveEvent.value = StartFragmentDirections.actionStartFragmentSelf()
-                    }else{
-                        _errorPassword.value = true
+    fun connectButton() {
+        model.apply {
+            _errorLogin.value = loginIsEmpty()
+            _errorPassword.value = passwordIsEmpty()
+            if(fieldsIsNotEmpty()){
+                viewModelScope.launch(Dispatchers.IO) {
+                    val user = database.usersDao.getUserLogin(userLogin)
+                    if (user.isNotEmpty()) {
+                        if (user[0].password == md5(userPassword)) {
+                            _navigationLiveEvent.postValue(StartFragmentDirections.actionStartFragmentToAdminFragment())
+                        } else {
+                            _errorPassword.postValue(ErrorStates.INVALID_PASSWORD)
+                        }
+                    } else {
+                        _errorLogin.postValue(ErrorStates.NO_SUCH_USER)
                     }
-                } else {
-                    _errorLogin.value = true
                 }
             }
-
         }
     }
-
-    private fun md5(input:String): String {
-        val md = MessageDigest.getInstance("MD5")
-        return BigInteger(1, md.digest(input.toByteArray())).toString(16).padStart(32, '0')
-    }
-
-    private fun isError(): Boolean {
-        _errorLogin.value = userLogin.value.toString().isEmpty()
-        _errorPassword.value = userPassword.value.toString().isEmpty()
-
-        return _errorLogin.value!! || _errorPassword.value!!
-    }
-
-    override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
-    }
-
-    override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
-
-    }
-
-
 }

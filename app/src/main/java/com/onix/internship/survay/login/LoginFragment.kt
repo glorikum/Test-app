@@ -10,13 +10,14 @@ import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.onix.internship.survay.database.TestAppDatabase
 import com.onix.internship.survay.databinding.LoginFragmentBinding
-import com.onix.internship.survay.register.RegisterViewModelFactory
 
 class LoginFragment : Fragment() {
     private lateinit var binding: LoginFragmentBinding
-    private val viewModel: LoginViewModel by viewModels {LoginViewModelFactory(
-        TestAppDatabase.getInstance(requireNotNull(this.activity).application).usersDao
-    )}
+    private val viewModel: LoginViewModel by viewModels {
+        LoginViewModelFactory(
+            TestAppDatabase.getInstance(requireContext())
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,5 +37,4 @@ class LoginFragment : Fragment() {
     private fun navigate(direction: NavDirections) {
         findNavController().navigate(direction)
     }
-
 }

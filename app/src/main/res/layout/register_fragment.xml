@@ -55,7 +55,8 @@
                     android:id="@+id/editFirstName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@={viewModel.firstName}"
+                    android:nextFocusDown="@id/editLastName"
+                    android:text="@={viewModel.model.firstName}"
                     style="@style/MainEditText"
                     android:hint="@string/register_fragment_first_name" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -80,7 +81,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/register_fragment_last_name"
-                    android:text="@={viewModel.lastName}" />
+                    android:text="@={viewModel.model.lastName}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -99,7 +100,7 @@
                     android:id="@+id/editLogin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@={viewModel.userLogin}"
+                    android:text="@={viewModel.model.userLogin}"
                     style="@style/MainEditText"
                     android:hint="@string/login" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -120,7 +121,7 @@
                     android:id="@+id/editPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@={viewModel.userPassword}"
+                    android:text="@={viewModel.model.userPassword}"
                     android:inputType="textPassword"
                     style="@style/MainEditText"
                     android:hint="@string/password" />
@@ -141,7 +142,7 @@
                     android:id="@+id/editPasswordConfirmation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@={viewModel.userPasswordConfirmation}"
+                    android:text="@={viewModel.model.userPasswordConfirmation}"
                     android:inputType="textPassword"
                     style="@style/MainEditText"
                     android:hint="@string/register_fragment_password_confirmation" />

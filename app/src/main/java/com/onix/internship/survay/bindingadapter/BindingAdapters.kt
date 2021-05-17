@@ -3,18 +3,16 @@ package com.onix.internship.survay.bindingadapter
 import androidx.databinding.BindingAdapter
 import com.google.android.material.textfield.TextInputLayout
 import com.onix.internship.survay.R
-import kotlinx.android.synthetic.main.login_fragment.view.*
-import kotlinx.android.synthetic.main.register_fragment.view.*
+import com.onix.internship.survay.errors.ErrorStates
 
 @BindingAdapter("errorMessage")
-fun TextInputLayout.errorMessage(errorState: Boolean) {
-    val id = this
-    error = if (errorState) {
-        when (id) {
-            editPasswordConfirmationLayout -> resources.getString(R.string.password_mismatch)
-            editFirstNameLayout -> resources.getString(R.string.no_user)
-            logEditPasswordLayout -> resources.getString(R.string.invalid_password)
-            else -> resources.getString(R.string.field_is_empty)
+fun TextInputLayout.errorMessage(errorState: ErrorStates) {
+        error = when (errorState) {
+            ErrorStates.NONE -> ""
+            ErrorStates.EMPTY_FIELD -> context.getString(R.string.field_is_empty)
+            ErrorStates.PASSWORDS_MISMATCH -> context.getString(R.string.password_mismatch)
+            ErrorStates.INVALID_PASSWORD -> context.getString(R.string.invalid_password)
+            ErrorStates.NO_SUCH_USER -> context.getString(R.string.no_user)
+            ErrorStates.ALREADY_IN_USE -> context.getString(R.string.already_in_use)
         }
-    } else ""
 }

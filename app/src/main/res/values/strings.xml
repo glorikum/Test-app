@@ -11,8 +11,10 @@
 
     <string name="login_fragment_hello">Hello</string>
     <string name="login_fragment_button_text">CONNECT</string>
-    <string name="field_is_empty">field is empty</string>
+
+    <string name="field_is_empty">Field is empty</string>
     <string name="password_mismatch">Password mismatch</string>
-    <string name="no_user">There is no such user</string>
+    <string name="no_user">No such user</string>
+    <string name="already_in_use">Already in use</string>
     <string name="invalid_password">Invalid password</string>
 </resources>

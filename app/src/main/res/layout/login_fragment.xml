@@ -44,7 +44,7 @@
                     style="@style/MainEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@={viewModel.userLogin}"
+                    android:text="@={viewModel.model.userLogin}"
                     android:hint="@string/login" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -62,7 +62,7 @@
                     android:id="@+id/editPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@={viewModel.userPassword}"
+                    android:text="@={viewModel.model.userPassword}"
                     style="@style/MainEditText"
                     android:hint="@string/password" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -72,7 +72,7 @@
                 style="@style/MainButton"
                 android:layout_height="wrap_content"
                 android:text="@string/login_fragment_button_text"
-                android:onClick="@{() -> viewModel.connect()}"
+                android:onClick="@{() -> viewModel.connectButton()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/logEditPasswordLayout" />
