@@ -1,32 +1,38 @@
 package com.onix.internship.survay.register
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.onix.internship.survay.R
+import androidx.fragment.app.viewModels
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
+import com.onix.internship.survay.database.TestAppDatabase
+import com.onix.internship.survay.databinding.RegisterFragmentBinding
 
 class RegisterFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = RegisterFragment()
-    }
-
-    private lateinit var viewModel: RegisterViewModel
+    private lateinit var binding: RegisterFragmentBinding
+    private  val viewModel: RegisterViewModel by viewModels{RegisterViewModelFactory(
+        TestAppDatabase.getInstance(requireContext())
+    )}
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.register_fragment, container, false)
+    ): View {
+        binding = RegisterFragmentBinding.inflate(inflater)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(RegisterViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+        viewModel.navigationLiveEvent.observe(viewLifecycleOwner, ::navigate)
     }
 
+    private fun navigate(direction: NavDirections) {
+        findNavController().navigate(direction)
+    }
 }

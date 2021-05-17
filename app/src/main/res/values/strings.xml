@@ -5,9 +5,16 @@
     <string name="register_fragment_last_name">Last Name</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
+    <string name="register">Register</string>
     <string name="register_fragment_password_confirmation">Password Confirmation</string>
     <string name="register_fragment_button_text">SUBMIT</string>
 
     <string name="login_fragment_hello">Hello</string>
     <string name="login_fragment_button_text">CONNECT</string>
+
+    <string name="field_is_empty">Field is empty</string>
+    <string name="password_mismatch">Password mismatch</string>
+    <string name="no_user">No such user</string>
+    <string name="already_in_use">Already in use</string>
+    <string name="invalid_password">Invalid password</string>
 </resources>

@@ -3,13 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainActivity">
+    app:startDestination="@id/startFragment">
 
-    <activity
-        android:id="@+id/mainActivity"
-        android:name="com.onix.internship.survay.activity.MainActivity"
-        android:label="activity_main"
-        tools:layout="@layout/activity_main" />
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.onix.internship.survay.register.RegisterFragment"
@@ -20,4 +15,21 @@
         android:name="com.onix.internship.survay.login.LoginFragment"
         android:label="login_fragment"
         tools:layout="@layout/login_fragment" />
+    <fragment
+        android:id="@+id/startFragment"
+        android:name="com.onix.internship.survay.start.StartFragment"
+        android:label="start_fragment"
+        tools:layout="@layout/start_fragment" >
+        <action
+            android:id="@+id/action_startFragment_self"
+            app:destination="@id/startFragment" />
+        <action
+            android:id="@+id/action_startFragment_to_adminFragment"
+            app:destination="@id/adminFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminFragment"
+        android:name="com.onix.internship.survay.admin.AdminFragment"
+        android:label="admin_fragment"
+        tools:layout="@layout/admin_fragment" />
 </navigation>
